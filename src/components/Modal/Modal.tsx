@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { Modal as AntdModal, ModalProps as AntdModalProps, Spin } from 'antd';
 
-const Modal: React.Fc= (
+const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
   props = {},
   ref
 ) => {
