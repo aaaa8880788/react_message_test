@@ -1,23 +1,34 @@
 import React, { useCallback, useState } from 'react'
-import {Button,Modal,Skin} from 'antd'
+import {Button,Modal,Spin} from 'antd'
 
 const DemoA = ()=>{
   const [visible,setVisible] = useState<boolean>(false)
   const [content,setContent] = useState<string>('')
   const [spinning,setSpinning] = useState<boolean>(false)
+  const [confirmLoading,setConfirmLoading] = useState<boolean>(false)
   const showModal = useCallback(() => {
     setContent('')
     setSpinning(true)
-    const isShowContent = new Promise((resolve:any)=>{
-      setTimeout(()=>{
-        setContent('这是弹窗的内容..........')
-        resolve()
-      },3000)
-    })
     setVisible(true)
+    new Promise<string>((resolve)=>{
+      setTimeout(()=>{
+        resolve('这是弹窗的内容..........')
+      },3000)
+    }).then((res)=>{
+      setContent(res)
+      setSpinning(false)
+    })
   },[])
   const handleOk = useCallback(() => {
-    setVisible(false)
+    setConfirmLoading(true)
+    new Promise<void>((resolve)=>{
+      setTimeout(()=>{
+        resolve()
+      },2000)
+    }).then(()=>{
+      setConfirmLoading(false)
+      setVisible(false)
+    })
   },[])
   const handleCancel = useCallback(() => {
     setVisible(false)
@@ -30,8 +41,9 @@ const DemoA = ()=>{
         visible={visible}
         onOk={handleOk}
         onCancel={handleCancel}
+        confirmLoading={confirmLoading}
       >
-        <Skin spinning=''>{content}</Skin>
+        <Spin spinning={spinning}>{content}</Spin>
       </Modal>
       <Button
         onClick={showModal}
