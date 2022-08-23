@@ -30,7 +30,7 @@ const DemoB = ()=>{
       >
         {content}
       </Modal>
-      <Button onClick={handleShowModal}>显示弹窗</Button>
+      <Button onClick={handleShowModal}>显示弹窗B</Button>
     </div>
   )
 }
