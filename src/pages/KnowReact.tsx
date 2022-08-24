@@ -18,13 +18,13 @@ const KnowReact = ()=>{
       <Child 
         onClickButton ={HandleClickButton1}
       >
-        button1---count1:{count1}
+        button1---count1
       </Child>
       <br />
       <Child 
         onClickButton ={HandleClickButton2}
       >
-        button2---count2:{count2}
+        button2---count2
       </Child>
       <br />
       <Child 
@@ -33,7 +33,7 @@ const KnowReact = ()=>{
           console.log('点击了button3');
         }}
       >
-        button3---count3:{count3}
+        button3---count3
       </Child>
     </div>
   )
@@ -41,6 +41,7 @@ const KnowReact = ()=>{
 
 const Child:FC<ChildType> = React.memo((props={})=>{
   const {onClickButton,children} = props
+  console.log(`重新渲染了${children}`);
   return (
     <>
       <Button onClick={onClickButton}>{children}</Button>
