@@ -1,7 +1,6 @@
-import React, { useCallback, useState } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import {Button,Modal,Spin} from 'antd'
-
-const DemoA = ()=>{
+const DemoA:FC = ()=>{
   const [visible,setVisible] = useState<boolean>(false)
   const [content,setContent] = useState<string>('')
   const [spinning,setSpinning] = useState<boolean>(false)
@@ -13,7 +12,7 @@ const DemoA = ()=>{
     new Promise<string>((resolve)=>{
       setTimeout(()=>{
         resolve('这是弹窗的内容..........')
-      },3000)
+      },2000)
     }).then((res)=>{
       setContent(res)
       setSpinning(false)

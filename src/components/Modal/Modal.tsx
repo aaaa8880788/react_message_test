@@ -12,7 +12,7 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
   props = {},
   ref
 ) => {
-  const { children, onOk, onCancel, ...reset } = props;
+  const { children={}, onOk, onCancel, ...reset } = props;
   const [spinning, setSpinning] = useState(false);
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -41,6 +41,8 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
   useImperativeHandle(ref, () => ({
     async showModal(options = {}) {
       const { afterShowModal } = options;
+
+      
       setVisible(true);
       if (afterShowModal) {
         setSpinning(true);
@@ -66,6 +68,8 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
   );
 };
 
+export default forwardRef(Modal);
+
 interface Options {
   afterShowModal?(): void | Promise<void>;
 }
@@ -78,12 +82,10 @@ export interface ModalRef {
 export interface ModalProps
   extends Omit<
     AntdModalProps,
-    'visible' | 'confirmLoading' | 'onOk' | 'onCancel'
+    'onOk' | 'onCancel'
   > {
   onOk?(
     event: React.MouseEvent<HTMLElement> & { stopClose: () => void }
   ): void | Promise<void>;
   onCancel?(): void | Promise<void>;
 }
-
-export default forwardRef(Modal);

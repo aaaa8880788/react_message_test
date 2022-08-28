@@ -4,7 +4,7 @@ import Modal from '../components/Modal/Modal'
 
 const DemoB = ()=>{
   const [content,setContent] = useState<string>('')
-  const modalRef = useRef<React.ElementRef<typeof Modal>>(null)
+  const modalRef = useRef<React.ElementRef<typeof Modal>>(null) 
   const handleShowModal = useCallback(()=>{
     setContent('')
     modalRef.current?.showModal({
@@ -13,20 +13,31 @@ const DemoB = ()=>{
           setTimeout(()=>{
             setContent('这是弹窗的内容..........')
             resolve()
-          },3000)
+          },2000)
         })
       }
     })
   },[])
+  const handleOnOk = (event:React.MouseEvent<HTMLElement> & { stopClose: () => void })=>{
+    return new Promise<void>((resolve)=>{
+      console.log('🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆');
+      // event?.stopClose()
+      // resolve()
+      setTimeout(()=>{
+        resolve()
+      },2000)
+    })
+  }
+  const handleOnCancle = () =>{
+    console.log('🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆'); 
+  }
   return (
     <div>
       <Modal
         title='弹窗标题'
         ref={modalRef}
-        onOk={(event)=>{
-          event.stopClose()
-          console.log('🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆');
-        }}
+        onOk={handleOnOk}
+        onCancel={handleOnCancle}
       >
         {content}
       </Modal>
