@@ -1,12 +1,11 @@
 import React, {
   forwardRef,
-  ForwardRefRenderFunction,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import TodoList from './Todo';
 import Modal, { ModalRef, ModalProps } from '../Modal/Modal';
 
@@ -41,11 +40,13 @@ const TodoModal = forwardRef<ModalRef, TodoModalProps>((props, ref) => {
 
 export const useTodoModal = () => {
   const container = useRef(document.createElement('div'));
+  console.log(container.current);
+  
   const modalRef = useRef<React.ElementRef<typeof TodoModal>>(null);
 
   useEffect(() => {
     document.body.appendChild(container.current);
-    ReactDOM.render(<TodoModal ref={modalRef} />, container.current);
+    ReactDOM.createRoot(container.current).render(<TodoModal ref={modalRef} />)
 
     return () => {
       document.body.removeChild(container.current);

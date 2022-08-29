@@ -12,7 +12,7 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
   props = {},
   ref
 ) => {
-  const { children={}, onOk, onCancel, ...reset } = props;
+  const { children, onOk, onCancel, ...reset } = props;
   const [spinning, setSpinning] = useState(false);
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
