@@ -7,7 +7,8 @@ import React, {
 } from 'react';
 import ReactDOM from 'react-dom/client';
 import TodoList from './Todo';
-import Modal, { ModalRef, ModalProps } from '../Modal/Modal';
+import Modal from '../Modal/Modal';
+import  { ModalRef, ModalProps } from '../Modal/type'
 
 const useTodoData = () => {
   const [todoList, setTodoList] = useState<any[]>([]);
@@ -15,8 +16,9 @@ const useTodoData = () => {
   useEffect(() => {
     setTimeout(() => {
       const emptyArr = new Array(10).fill('');
+      
       setTodoList(
-        emptyArr.map((x) => ({
+        emptyArr.map(() => ({
           id: Math.random().toString().slice(2),
           title: `Money $${Math.random().toString().slice(2)}`,
           done: false,
@@ -30,7 +32,6 @@ const useTodoData = () => {
 
 const TodoModal = forwardRef<ModalRef, TodoModalProps>((props, ref) => {
   const data = useTodoData();
-
   return (
     <Modal title="待办项" ref={ref} {...props}>
       <TodoList data={data} />
@@ -40,8 +41,6 @@ const TodoModal = forwardRef<ModalRef, TodoModalProps>((props, ref) => {
 
 export const useTodoModal = () => {
   const container = useRef(document.createElement('div'));
-  console.log(container.current);
-  
   const modalRef = useRef<React.ElementRef<typeof TodoModal>>(null);
 
   useEffect(() => {

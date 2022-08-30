@@ -14,7 +14,7 @@ export interface ModalProps
     AntdModalProps,
     'onOk' | 'onCancel'
   > {
-  onOk:OnOkType
+  onOk?:OnOkType
   onCancel?(): void | Promise<void>;
 }
 

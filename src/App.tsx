@@ -11,9 +11,9 @@ function App() {
       {/* Modal正常使用 */}
       {/* <DemoA /> */}
       {/* Modal初步封装 */}
-      {/* <DemoB /> */}
+      <DemoB />
       {/* Modal-Hook封装 */}
-      <DemoC />
+      {/* <DemoC /> */}
     </div>
   );
 }

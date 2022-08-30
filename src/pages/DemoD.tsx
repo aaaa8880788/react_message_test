@@ -1,9 +1,12 @@
-import React, { useCallback, useRef, useState } from 'react'
-import { Button } from 'antd'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
+import { Button, Input } from 'antd'
 import Modal from '../components/Modal/Modal'
+import Verify from '../components/Verify'
 
 const DemoB = () => {
   const [content, setContent] = useState<string>('')
+  const [step, setstep] = useState('init')
+  const [iptvalue, setiptvalue] = useState<string>('xxxx')
   const modalRef = useRef<React.ElementRef<typeof Modal>>(null)
   const handleShowModal = useCallback(() => {
     setContent('')
@@ -31,6 +34,29 @@ const DemoB = () => {
   const handleOnCancle = () => {
     console.log('🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆');
   }
+  let initContent = useMemo(() => {
+    return (
+      <>
+        initContent
+      <input value={iptvalue} onChange={(e)=>{
+          setiptvalue(e.target.value)
+      }}></input>
+        <Button onClick={() => {
+          setstep('verfiy')
+        }}>next</Button>
+      </>
+    )
+  }, [iptvalue])
+let renderModalContent = useCallback(() => {
+    switch (step) {
+      case 'init':
+        return initContent
+      case 'verfiy':
+        return <Verify  setstep={setstep} step={step}/>
+      default:
+        break;
+    }
+}, [step,,iptvalue])
   return (
     <div>
       <Modal
@@ -39,7 +65,7 @@ const DemoB = () => {
         onOk={handleOnOk}
         onCancel={handleOnCancle}
       >
-        {content}
+        {renderModalContent()}
       </Modal>
       <Button onClick={handleShowModal}>显示弹窗B</Button>
 

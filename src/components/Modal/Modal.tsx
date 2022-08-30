@@ -6,10 +6,11 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Modal as AntdModal, ModalProps as AntdModalProps, Spin } from 'antd';
+import { Modal as AntdModal, Spin } from 'antd';
+import type {ModalRef,ModalProps} from './type'
 
 const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
-  props = {},
+  props,
   ref
 ) => {
   const { children, onOk, onCancel, ...reset } = props;
@@ -69,23 +70,3 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
 };
 
 export default forwardRef(Modal);
-
-interface Options {
-  afterShowModal?(): void | Promise<void>;
-}
-
-export interface ModalRef {
-  showModal(options?: Options): Promise<void>;
-  closeModal(): void;
-}
-
-export interface ModalProps
-  extends Omit<
-    AntdModalProps,
-    'onOk' | 'onCancel'
-  > {
-  onOk?(
-    event: React.MouseEvent<HTMLElement> & { stopClose: () => void }
-  ): void | Promise<void>;
-  onCancel?(): void | Promise<void>;
-}
