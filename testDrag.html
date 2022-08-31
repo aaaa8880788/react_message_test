@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body,
+    html {
+      height: 100%;
+      width: 100%;
+    }
+
+    #draggable {
+      background-color: #eee;
+      width: 200px;
+      height: 200px;
+      font-style: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+    .no-select {
+    user-select: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="draggable" class="no-select">drag</div>
+  <script>
+    const draggable = document.getElementById('draggable')
+    let isMouseDown 
+    let initX
+    let initY
+    // draggable的盒子高度，外边距以内全部
+    let height = draggable.offsetHeight
+    // draggable的盒子宽度，外边距以内全部
+    let width = draggable.offsetWidth
+    draggable.addEventListener('mousedown', function (e) {
+      isMouseDown = true;
+      draggable.classList.add('no-select');
+      // 鼠标当前位置距离盒子左侧的x值
+      initX = e.offsetX
+      // 鼠标当前位置距离盒子左侧的y值
+      initY = e.offsetY
+    })
+
+    document.addEventListener('mousemove', function (e) {
+      if (isMouseDown) {
+        let cx = e.clientX - initX
+        let cy = e.clientY - initY
+        if(cx < 0) {
+          cx = 0
+        }
+        if(cy < 0) {
+          cy = 0
+        }
+        if (window.innerWidth -e.clientX + initX < width){
+          cx = window.innerWidth - width
+        }
+        if (e.clientY > window.innerHeight - height + initY){
+          cy = window.innerHeight - height
+        }
+        draggable.style.left = cx + 'px';
+        draggable.style.top = cy + 'px';
+      }
+    })
+
+    draggable.addEventListener('mouseup', function () {
+      isMouseDown = false;
+      draggable.classList.remove('no-select');
+    })
+  </script>
+</body>
+
+</html>

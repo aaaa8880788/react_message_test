@@ -1,6 +1,6 @@
 import DemoA from './pages/DemoA';
 import DemoB from './pages/DemoB'
-import DemoC from './pages/DemoC'
+import DemoC from './pages/lower'
 import KnowHooks from './pages/KnowHooks';
 
 function App() {
@@ -12,8 +12,6 @@ function App() {
       {/* <DemoA /> */}
       {/* Modal初步封装 */}
       <DemoB />
-      {/* Modal-Hook封装 */}
-      {/* <DemoC /> */}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { Button, Input } from 'antd'
+import { Button } from 'antd'
 import Modal from '../components/Modal/Modal'
 import Verify from '../components/Verify'
 

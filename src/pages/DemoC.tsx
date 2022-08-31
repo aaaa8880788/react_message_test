@@ -1,26 +1,85 @@
-import React from 'react'
-import {Button} from 'antd'
-import { useTodoModal } from '../components/TodoModal'
+import React, { useCallback, useRef, useState } from 'react'
+import { Button } from 'antd'
+import Modal from '../components/Modal/Modal'
+import TestComponent from '@/components/TestComponent'
 
-const DemoC = ()=>{
-  const {show} = useTodoModal()
-  return (
-    <div>
-      <Button onClick={()=>{
-        show({
-          afterShowModal(){
-            return new Promise((resolve)=>{
-              setTimeout(()=>{
-                resolve()
-              },3000)
-            })
+const DemoB = () => {
+  const [content, setContent] = useState<string>('')
+  const modalRef = useRef<React.ElementRef<typeof Modal>>(null)
+
+  const mock1 = () =>{
+    return new Promise<Mock>((resolve)=>{
+      setTimeout(() => {
+        resolve({
+          code:0,
+          message:'React好难啊，救救我~🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆'
+        })
+      }, 2000);
+    })
+  }
+  const mock2 = () =>{
+    return new Promise<Mock>((resolve)=>{
+      setTimeout(() => {
+        resolve({
+          code:0,
+          message:'摆烂🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆'
+        })
+      }, 2000);
+    })
+  }
+
+  const handleShowModal = useCallback(() => {
+    setContent('')
+    modalRef.current?.showModal({
+      afterShowModal() {
+        return new Promise(async(resolve) => {
+          const res = await mock1()
+          if(res.code === 0) {
+            setContent(res.message)
+            resolve()
           }
         })
-      }}>
-         显示待办项弹窗C
-      </Button>
+      }
+    })
+  }, [])
+  const handleOnOk = (event: React.MouseEvent<HTMLElement> & { stopClose: () => void }) => {
+    return new Promise<void>(async(resolve) => {
+      const res = await mock2()
+      if(res.code === 0) {
+        console.log('🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆');
+        event?.stopClose()
+        resolve()
+      }
+    })
+  }
+  const handleOnCancle = () => {
+    console.log('🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆');
+  }
+  return (
+    <div>
+      <Modal
+        destroyOnClose
+        title='弹窗标题'
+        ref={modalRef}
+        onOk={handleOnOk}
+        onCancel={handleOnCancle}
+        okButtonProps = {{
+          style:{
+            display: content ? "" : "none"
+          }
+        }}
+      >
+        <TestComponent message={content}></TestComponent>
+      </Modal>
+      <Button onClick={handleShowModal}>显示弹窗B</Button>
+
     </div>
   )
 }
 
-export default DemoC
+export default DemoB
+
+interface Mock {
+  code:number
+  message:string
+}
