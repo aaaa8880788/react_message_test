@@ -9,8 +9,10 @@
   <style>
     body,
     html {
-      height: 100%;
-      width: 100%;
+      padding: 0;
+      margin: 0;
+      height: 100vh;
+      width: 100vw;
     }
 
     #draggable {
@@ -26,7 +28,8 @@
       top: 0;
     }
     .no-select {
-    user-select: none;
+      /* 文字无法选中 */
+      user-select: none;
     }
   </style>
 </head>
@@ -34,6 +37,7 @@
 <body>
   <div id="draggable" class="no-select">drag</div>
   <script>
+     // 获取draggable盒子的dom元素（小知识点，直接拿该盒子的id直接当作dom元素用也行，id盒子可以不用做获取dom元素这步操作）
     const draggable = document.getElementById('draggable')
     let isMouseDown 
     let initX
@@ -42,6 +46,7 @@
     let height = draggable.offsetHeight
     // draggable的盒子宽度，外边距以内全部
     let width = draggable.offsetWidth
+    // 鼠标按下事件
     draggable.addEventListener('mousedown', function (e) {
       isMouseDown = true;
       draggable.classList.add('no-select');
@@ -61,11 +66,11 @@
         if(cy < 0) {
           cy = 0
         }
-        if (window.innerWidth -e.clientX + initX < width){
+        if(cx + width > window.innerWidth){
           cx = window.innerWidth - width
         }
-        if (e.clientY > window.innerHeight - height + initY){
-          cy = window.innerHeight - height
+        if(cy + height > window.innerHeight){
+          cy = width.innerHeight - height
         }
         draggable.style.left = cx + 'px';
         draggable.style.top = cy + 'px';
@@ -75,6 +80,12 @@
     draggable.addEventListener('mouseup', function () {
       isMouseDown = false;
       draggable.classList.remove('no-select');
+    })
+    document.addEventListener('mouseup' , function (e) {
+      if(e.clientY > window.innerHeight || e.clientY < 0 || e.clientX < 0 || e.clientX > innerWidth){
+        isMouseDown = false;
+        draggable.classList.remove('no-select');
+      }
     })
   </script>
 </body>
