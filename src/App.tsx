@@ -1,6 +1,6 @@
 import DemoA from './pages/DemoA';
 import DemoB from './pages/DemoB'
-import DemoC from './pages/lower'
+import DemoC from './pages/DemoC'
 import KnowHooks from './pages/KnowHooks';
 
 function App() {
@@ -10,8 +10,10 @@ function App() {
       {/* <KnowHooks></KnowHooks> */}
       {/* Modal正常使用 */}
       {/* <DemoA /> */}
-      {/* Modal初步封装 */}
-      <DemoB />
+      {/* Modal封装 */}
+      {/* <DemoB /> */}
+      {/* Modal封装+拖拽 */}
+      <DemoC />
     </div>
   );
 }

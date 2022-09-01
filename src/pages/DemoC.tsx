@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { Button } from 'antd'
-import Modal from '../components/Modal/Modal'
+import Modal from '../components/SuperModal/Modal'
 import TestComponent from '@/components/TestComponent'
 
 const DemoB = () => {
@@ -59,7 +59,15 @@ const DemoB = () => {
     <div>
       <Modal
         destroyOnClose
-        title='弹窗标题'
+        title= {
+          <div
+            className='dragBoxBar'
+            style={{ height: "100", width: "100%", cursor: 'move', userSelect: "none" }}
+            onMouseDown={ modalRef.current?.onMouseDown}
+          >
+            <span>弹窗标题</span>
+          </div>
+        }
         ref={modalRef}
         onOk={handleOnOk}
         onCancel={handleOnCancle}
@@ -71,7 +79,7 @@ const DemoB = () => {
       >
         <TestComponent message={content}></TestComponent>
       </Modal>
-      <Button onClick={handleShowModal}>显示弹窗B</Button>
+      <Button onClick={handleShowModal}>显示弹窗C</Button>
 
     </div>
   )
