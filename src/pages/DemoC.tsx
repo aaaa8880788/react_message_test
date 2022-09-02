@@ -59,15 +59,6 @@ const DemoB = () => {
     <div>
       <Modal
         destroyOnClose
-        title= {
-          <div
-            className='dragBoxBar'
-            style={{ height: "100", width: "100%", cursor: 'move', userSelect: "none" }}
-            onMouseDown={ modalRef.current?.onMouseDown}
-          >
-            <span>弹窗标题</span>
-          </div>
-        }
         ref={modalRef}
         onOk={handleOnOk}
         onCancel={handleOnCancle}
@@ -76,6 +67,15 @@ const DemoB = () => {
             display: content ? "" : "none"
           }
         }}
+        title= {
+          <div
+            className='dragBoxBar'
+            style={{ height: "100%", width: "100%", cursor: 'move', userSelect: "none" }}
+            onMouseDown={ modalRef.current?.onMouseDown}
+          >
+            <span>弹窗标题</span>
+          </div>
+        }
       >
         <TestComponent message={content}></TestComponent>
       </Modal>

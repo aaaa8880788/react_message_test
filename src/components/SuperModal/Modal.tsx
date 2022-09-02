@@ -5,11 +5,15 @@ import React, {
   useImperativeHandle,
   useRef,
   useState,
-  useEffect, 
+  useEffect,
   ReactElement
-} from 'react'; 
+} from 'react';
 import { Modal as AntdModal, Spin } from 'antd';
-import type {ModalRef,ModalProps} from './type'
+import type { ModalRef, ModalProps } from './type'
+
+let content: HTMLDivElement
+let contentLeft: number = 0
+let contentRight: number = 0;
 
 const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
   props,
@@ -20,16 +24,14 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const isStop = useRef(false);
-  const [isDrag,setIsDrag] = useState(false)
-  const [styleLT,setStyleLT] = useState({
-    styleLeft:0,
-    styleTop:100
+  const [styleLT, setStyleLT] = useState({
+    styleLeft: 0,
+    styleTop: 100
   })
   const style = {
-    left:styleLT.styleLeft,
-    top:styleLT.styleTop
+    left: styleLT.styleLeft,
+    top: styleLT.styleTop
   }
-
   // 阻止弹窗关闭
   const stopClose = useCallback(() => {
     isStop.current = true;
@@ -50,7 +52,13 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
     onCancel && onCancel();
     setVisible(false);
   }, [onCancel]);
-
+  // 弹窗关闭后触发
+  const afterClose = () => {
+    setStyleLT({
+      styleLeft: 0,
+      styleTop: 100
+    })
+  }
   // 向外暴露方法
   useImperativeHandle(ref, () => ({
     // 打开弹窗
@@ -68,29 +76,57 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
       setVisible(false);
     },
     // 拖拽方法
-    onMouseDown (e:React.MouseEvent<HTMLElement>){
+    onMouseDown(e: React.MouseEvent<HTMLElement>) {
       e.preventDefault()
-      let content = document.getElementsByClassName("ant-modal-content")[0] as HTMLDivElement;
-      let contentInfo = content.getBoundingClientRect()
-      console.log('content',content);
-      console.log('e---',e);
-      console.log('getBoundingClientRect---',contentInfo  );
+      content = document.getElementsByClassName("ant-modal-content")[0] as HTMLDivElement;
+      contentLeft = content.getBoundingClientRect().left;
+      contentRight = content.getBoundingClientRect().right - content.offsetWidth;
       // 记录初始拖动鼠标位置
       const startX = e.clientX
       const startY = e.clientY
+      styleLT
+      console.log('startX----', startX);
+      console.log('startY----', startY);
+      console.log('styleLeft----', styleLT.styleLeft);
+      console.log('styleTop----', styleLT.styleTop);
+      console.log('e----', e);
+      
       // 添加鼠标移动事件
       document.onmousemove = (e) => {
-        const cx = e.clientX - startX
-        const cy = e.clientY - startY
+        console.log('styleLeft',styleLT.styleLeft);
+        console.log('styleTop',styleLT.styleTop);
+        
+        let cx = e.clientX - startX + styleLT.styleLeft
+        let cy = e.clientY - startY + styleLT.styleTop
+        if (cx < -contentLeft) {
+          cx = -contentLeft;
+        }
+        if (cy < 0) {
+          cy = 0;
+        }
+        if (cx > contentRight) {
+          cx = contentRight;
+        }
 
+        if (window.innerHeight - cy < content.offsetHeight) {
+          cy = window.innerHeight - content.offsetHeight;
+        }
         setStyleLT({
-          styleLeft:cx,
-          styleTop:cy
+          styleLeft: cx,
+          styleTop: cy
         })
       }
-      
+      // 鼠标松开去除移动事件
+      document.onmouseup = (e) => {
+        document.onmousemove = null
+        if (e.clientX > window.innerWidth || e.clientY < 0 || e.clientX < 0 || e.clientY > window.innerHeight) {
+          document.onmousemove = null
+        }
+      }
+
     }
   }));
+
 
   return (
     <AntdModal
@@ -100,6 +136,7 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
       onOk={handleOnOK}
       onCancel={handleOnCancel}
       style={style}
+      afterClose={afterClose}
     >
       <Spin spinning={spinning}>{children}</Spin>
     </AntdModal>
