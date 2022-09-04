@@ -7,7 +7,6 @@ interface Options {
 export interface ModalRef {
   showModal(options?: Options): Promise<void>;
   closeModal(): void;
-  onMouseDown(e:React.MouseEvent<HTMLElement>):void
 }
 
 export interface ModalProps
@@ -15,6 +14,7 @@ export interface ModalProps
     AntdModalProps,
     'onOk' | 'onCancel'
   > {
+  isDrag?:boolean
   onOk?:OnOkType
   onCancel?(): void | Promise<void>;
 }

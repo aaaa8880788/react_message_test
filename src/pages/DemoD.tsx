@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { Button } from 'antd'
-import Modal from '../components/Modal/Modal'
+import Modal from '../components/SuperModal/Modal'
 import Verify from '../components/Verify'
 
-const DemoB = () => {
+const DemoD = () => {
   const [content, setContent] = useState<string>('')
   const [step, setstep] = useState('init')
   const [iptvalue, setiptvalue] = useState<string>('xxxx')
@@ -61,16 +61,17 @@ let renderModalContent = useCallback(() => {
     <div>
       <Modal
         title='弹窗标题'
+        isDrag
         ref={modalRef}
         onOk={handleOnOk}
         onCancel={handleOnCancle}
       >
         {renderModalContent()}
       </Modal>
-      <Button onClick={handleShowModal}>显示弹窗B</Button>
+      <Button onClick={handleShowModal}>显示弹窗D</Button>
 
     </div>
   )
 }
 
-export default DemoB
+export default DemoD

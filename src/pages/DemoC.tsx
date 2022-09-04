@@ -1,9 +1,9 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { FC, useCallback, useRef, useState } from 'react'
 import { Button } from 'antd'
 import Modal from '../components/SuperModal/Modal'
 import TestComponent from '@/components/TestComponent'
 
-const DemoB = () => {
+const DemoB:FC = () => {
   const [content, setContent] = useState<string>('')
   const modalRef = useRef<React.ElementRef<typeof Modal>>(null)
 
@@ -47,34 +47,33 @@ const DemoB = () => {
       const res = await mock2()
       if(res.code === 0) {
         console.log('🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆');
-        event?.stopClose()
+        // event?.stopClose()
         resolve()
       }
     })
   }
   const handleOnCancle = () => {
-    console.log('🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆');
+    console.log('🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆');
   }
   return (
     <div>
       <Modal
         destroyOnClose
+        isDrag
         ref={modalRef}
         onOk={handleOnOk}
         onCancel={handleOnCancle}
+        bodyStyle={{
+          width:'100%',
+          height:'200px'
+        }}
         okButtonProps = {{
           style:{
             display: content ? "" : "none"
           }
         }}
-        title= {
-          <div
-            className='dragBoxBar'
-            style={{ height: "100%", width: "100%", cursor: 'move', userSelect: "none" }}
-            onMouseDown={ modalRef.current?.onMouseDown}
-          >
-            <span>弹窗标题</span>
-          </div>
+        title={
+          <span>弹窗标题</span>
         }
       >
         <TestComponent message={content}></TestComponent>

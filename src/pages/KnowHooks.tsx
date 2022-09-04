@@ -1,4 +1,4 @@
-import React, { FC, useCallback,  useRef,  useState } from 'react'
+import React, { FC, useCallback,useState } from 'react'
 import {Button} from 'antd'
 const KnowHooks:FC = () => {
   const [count1 ,setCount1] = useState<number>(0)
