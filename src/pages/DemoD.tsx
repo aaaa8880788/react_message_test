@@ -1,77 +1,79 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { Button } from 'antd'
+import React, { useCallback, useRef, useState } from 'react'
+import moment from 'moment'
 import Modal from '../components/SuperModal/Modal'
-import Verify from '../components/Verify'
+import { Button } from 'antd'
+import TodoList from '../components/TodoList'
 
-const DemoD = () => {
-  const [content, setContent] = useState<string>('')
-  const [step, setstep] = useState('init')
-  const [iptvalue, setiptvalue] = useState<string>('xxxx')
+const mock1 = () =>{
+  return new Promise<Mock>((resolve)=>{
+    setTimeout(() => {
+      resolve({
+        code:0,
+        data:[{
+          id:Math.random().toString().slice(2),
+          title:'React好难啊，救救我~🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆',
+          createTime:moment().valueOf()
+        }]
+      })
+    }, 2000);
+  })
+}
+
+const DemoF = () => {
+  const [content,setContent] = useState<any[]>([])
   const modalRef = useRef<React.ElementRef<typeof Modal>>(null)
-  const handleShowModal = useCallback(() => {
-    setContent('')
+
+  const handleShowModal = useCallback(()=>{
+    setContent([])
     modalRef.current?.showModal({
-      afterShowModal() {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            setContent('这是弹窗的内容..........')
+      afterShowModal(){
+        return new Promise(async(resolve) => {
+          const res = await mock1()
+          if(res.code === 0) {
+            setContent([...content,...res.data])
             resolve()
-          }, 2000)
+          }
         })
       }
     })
-  }, [])
-  const handleOnOk = (event: React.MouseEvent<HTMLElement> & { stopClose: () => void }) => {
-    return new Promise<void>((resolve) => {
-      console.log('🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆');
-      // event?.stopClose()
-      // resolve()
-      setTimeout(() => {
-        resolve()
-      }, 2000)
-    })
-  }
-  const handleOnCancle = () => {
-    console.log('🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆');
-  }
-  let initContent = useMemo(() => {
-    return (
-      <>
-        initContent
-      <input value={iptvalue} onChange={(e)=>{
-          setiptvalue(e.target.value)
-      }}></input>
-        <Button onClick={() => {
-          setstep('verfiy')
-        }}>next</Button>
-      </>
-    )
-  }, [iptvalue])
-let renderModalContent = useCallback(() => {
-    switch (step) {
-      case 'init':
-        return initContent
-      case 'verfiy':
-        return <Verify  setstep={setstep} step={step}/>
-      default:
-        break;
-    }
-}, [step,,iptvalue])
-  return (
-    <div>
-      <Modal
-        title='弹窗标题'
-        isDrag
-        ref={modalRef}
-        onOk={handleOnOk}
-        onCancel={handleOnCancle}
-      >
-        {renderModalContent()}
-      </Modal>
-      <Button onClick={handleShowModal}>显示弹窗D</Button>
+  },[])
 
-    </div>
+  const handleOnOk = useCallback((event:React.MouseEvent<HTMLElement> & { stopClose: () => void }) => {
+    return new Promise<void>((resolve) => {
+      console.log('确定了~🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆');
+      // event?.stopClose()
+      // resolve
+      setTimeout(()=>{
+        resolve()
+      },2000)
+    })
+  },[])
+
+  const handleCancle = useCallback(() => {
+    console.log('取消了~🦆🦆');
+  },[])
+
+  return (
+    <>
+      <Modal
+        isDrag
+        title='弹窗标题'
+        ref={modalRef}
+        onOk={ handleOnOk }
+        onCancel={ handleCancle }
+      >
+        {
+          <TodoList data={content}></TodoList>
+        }
+      </Modal>
+      <Button onClick={handleShowModal}>弹窗D</Button>
+    </>
   )
 }
 
-export default DemoD
+export default DemoF
+
+interface Mock {
+  code:number
+  data:any[]
+}

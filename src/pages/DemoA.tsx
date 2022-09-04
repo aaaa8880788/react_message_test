@@ -61,6 +61,13 @@ const DemoA:FC = ()=>{
         onOk={handleOk}
         onCancel={handleCancel}
         confirmLoading={confirmLoading}
+        bodyStyle={{
+          height:'300px',
+          display:'flex',
+          alignItems:'center',
+          justifyContent:'center',
+          fontSize:'18px'
+        }}
         okButtonProps = {{
           style:{
             display: content ? "" : "none"

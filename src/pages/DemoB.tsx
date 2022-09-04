@@ -68,6 +68,13 @@ const DemoB = () => {
             display: content ? "" : "none"
           }
         }}
+        bodyStyle={{
+          height:'300px',
+          display:'flex',
+          alignItems:'center',
+          justifyContent:'center',
+          fontSize:'18px'
+        }}
       >
         <TestComponent message={content}></TestComponent>
       </Modal>

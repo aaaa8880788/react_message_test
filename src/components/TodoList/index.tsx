@@ -11,6 +11,7 @@ export const TodoContext = React.createContext<TodoContextProps>({
 
 const index:FC<TodoProps> = (props) => {
   const { data } = props
+  
   const [todoList,setTodoList] = useState<TodoItem[]>([])
   const todoListRef = useRef(todoList)
 
@@ -21,6 +22,7 @@ const index:FC<TodoProps> = (props) => {
   },[])
 
   useEffect(()=>{ 
+    todoListRef.current = data
     setTodoList([...todoListRef.current])
   },[data])
 

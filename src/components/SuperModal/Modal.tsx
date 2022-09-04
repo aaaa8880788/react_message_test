@@ -132,7 +132,7 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
       centered
       title= {
         <div
-          className= {isDrag? 'dragBoxBar' : ''}
+          className= {isDrag ? 'dragBoxBar' : ''}
           onMouseDown={ isDrag ? onMouseDown : ()=> {}}
         >
           {title}
