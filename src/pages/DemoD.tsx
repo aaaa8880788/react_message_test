@@ -19,7 +19,7 @@ const mock1 = () =>{
   })
 }
 
-const DemoF = () => {
+const DemoD = () => {
   const [content,setContent] = useState<any[]>([])
   const modalRef = useRef<React.ElementRef<typeof Modal>>(null)
 
@@ -57,18 +57,18 @@ const DemoF = () => {
     <>
       <Modal
         isDrag
-        title='弹窗标题'
+        // title='弹窗标题'
         ref={modalRef}
         onOk={ handleOnOk }
         onCancel={ handleCancle }
-        // title= {
-        // <div
-        //   className= {'dragBoxBar'}
-        //   onMouseDown={ modalRef.current?.onMouseDown }
-        // >
-        //   '弹窗标题'
-        // </div>
-        // }
+        title= {
+        <div
+          className= {'dragBoxBar'}
+          onMouseDown={ modalRef.current?.onMouseDown }
+        >
+          '弹窗标题'
+        </div>
+        }
       >
         {
           <TodoList data={content}></TodoList>
@@ -79,7 +79,7 @@ const DemoF = () => {
   )
 }
 
-export default DemoF
+export default DemoD
 
 interface Mock {
   code:number

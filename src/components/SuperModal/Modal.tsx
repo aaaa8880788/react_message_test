@@ -130,15 +130,15 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
       style={style}
       afterClose={afterClose}
       centered
-      title= {
-        <div
-          className= {isDrag ? 'dragBoxBar' : ''}
-          onMouseDown={ isDrag ? onMouseDown : ()=> {}}
-        >
-          {title}
-        </div>
-      }
-      // title={title}
+      // title= {
+      //   <div
+      //     className= {isDrag ? 'dragBoxBar' : ''}
+      //     onMouseDown={ isDrag ? onMouseDown : ()=> {}}
+      //   >
+      //     {title}
+      //   </div>
+      // }
+      title={title}
     >
       <Spin spinning={spinning}>{children}</Spin>
     </AntdModal>
