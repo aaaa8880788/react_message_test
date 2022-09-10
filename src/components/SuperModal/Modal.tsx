@@ -61,7 +61,7 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
     }
   }
   // 拖拽方法
-  const onMouseDown = (e: React.MouseEvent<HTMLElement>) => { 
+  const onMouseDown = (e: React.MouseEvent) => { 
     e.preventDefault()
       content = document.getElementsByClassName("ant-modal-content")[0] as HTMLDivElement;
       contentLeft = content.getBoundingClientRect().left;
@@ -90,7 +90,6 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
         styleLeft: cx,
         styleTop: cy
       })
-      
     }
     // 鼠标松开去除移动事件
     document.onmouseup = (e) => {
@@ -117,6 +116,7 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
     closeModal() {
       setVisible(false);
     },
+    onMouseDown
   }));
 
 
@@ -138,6 +138,7 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
           {title}
         </div>
       }
+      // title={title}
     >
       <Spin spinning={spinning}>{children}</Spin>
     </AntdModal>
