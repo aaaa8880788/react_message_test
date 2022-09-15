@@ -57,18 +57,18 @@ const DemoD = () => {
     <>
       <Modal
         isDrag
-        // title='弹窗标题'
+        title='弹窗标题'
+        // title= {
+        //   <div
+        //     className= {'dragBoxBar'}
+        //     onMouseDown={ modalRef.current?.onMouseDown}
+        //   >
+        //     弹窗标题
+        //   </div>
+        // }
         ref={modalRef}
         onOk={ handleOnOk }
         onCancel={ handleCancle }
-        title= {
-        <div
-          className= {'dragBoxBar'}
-          onMouseDown={ modalRef.current?.onMouseDown }
-        >
-          '弹窗标题'
-        </div>
-        }
       >
         {
           <TodoList data={content}></TodoList>

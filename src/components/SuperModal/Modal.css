@@ -9,3 +9,16 @@
   cursor: move;
   user-select: none;
 }
+.ant-modal{
+  margin: 0 !important;
+}
+.ant-modal-content{
+  width: 800px;
+  height: 500px;
+}
+.ant-modal-footer{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

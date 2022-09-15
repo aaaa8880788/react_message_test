@@ -7,7 +7,7 @@ const DemoA:FC = ()=>{
   const [spinning,setSpinning] = useState<boolean>(false)
   const [confirmLoading,setConfirmLoading] = useState<boolean>(false)
 
-  // 网络请求
+  // 模拟网络请求
   const mock1 = useCallback(()=>{
     return new Promise<Mock>((resolve)=>{
       setTimeout(()=>{
@@ -15,9 +15,10 @@ const DemoA:FC = ()=>{
           code:0,
           message:'React好难啊，救救我~🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆'
         })
-      },2000)
+      },4000)
     })
   },[])
+  // 模拟网络请求
   const mock2 = useCallback(()=>{
     return new Promise<Mock>((resolve)=>{
       setTimeout(() => {
@@ -25,7 +26,7 @@ const DemoA:FC = ()=>{
           code:0,
           message:'摆烂🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆🦆'
         })
-      }, 2000);
+      }, 4000);
     })
   },[])
   // 打开对话框
@@ -39,6 +40,7 @@ const DemoA:FC = ()=>{
       setSpinning(false)
     }
   },[content])
+  // 确定
   const handleOk = useCallback(async() => {
     setConfirmLoading(true)
     const res = await mock2()
@@ -48,6 +50,7 @@ const DemoA:FC = ()=>{
       console.log(res.message);  
     }
   },[])
+  // 取消
   const handleCancel = useCallback(() => {
     setVisible(false)
   },[])

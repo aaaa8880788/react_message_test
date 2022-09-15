@@ -27,66 +27,66 @@
       left: 0;
       top: 0;
     }
+
     .no-select {
       /* 文字无法选中 */
       user-select: none;
+      cursor: move;
     }
   </style>
 </head>
 
 <body>
-  <div id="draggable" class="no-select">drag</div>
+  <div id="draggable">drag</div>
   <script>
-     // 获取draggable盒子的dom元素（小知识点，直接拿该盒子的id直接当作dom元素用也行，id盒子可以不用做获取dom元素这步操作）
+    // 获取draggable盒子的dom元素（小知识点，直接拿该盒子的id直接当作dom元素用也行，id盒子可以不用做获取dom元素这步操作）
     const draggable = document.getElementById('draggable')
-    let isMouseDown 
-    let initX
-    let initY
-    // draggable的盒子高度，外边距以内全部
+    // 盒子初始left
+    let styleLeft = 0
+    // 盒子初始top
+    let styleTop = 0
+    // draggable的盒子高度
     let height = draggable.offsetHeight
-    // draggable的盒子宽度，外边距以内全部
+    // draggable的盒子宽度
     let width = draggable.offsetWidth
+    // 盒子位移x距离
+    let cx
+    // 盒子位移y距离
+    let cy
     // 鼠标按下事件
-    draggable.addEventListener('mousedown', function (e) {
-      isMouseDown = true;
-      draggable.classList.add('no-select');
-      // 鼠标当前位置距离盒子左侧的x值
-      initX = e.offsetX
-      // 鼠标当前位置距离盒子左侧的y值
-      initY = e.offsetY
-    })
-
-    document.addEventListener('mousemove', function (e) {
-      if (isMouseDown) {
-        let cx = e.clientX - initX
-        let cy = e.clientY - initY
-        if(cx < 0) {
-          cx = 0
-        }
-        if(cy < 0) {
-          cy = 0
-        }
-        if(cx + width > window.innerWidth){
-          cx = window.innerWidth - width
-        }
-        if(cy + height > window.innerHeight){
-          cy = width.innerHeight - height
-        }
-        draggable.style.left = cx + 'px';
-        draggable.style.top = cy + 'px';
+    draggable.onmousedown = function (e) {
+      console.log(draggable.classList);
+      draggable.classList.add("no-select");
+      // 记录初始拖动鼠标位置
+      const startX = e.clientX
+      const startY = e.clientY
+      document.onmousemove =  function (e) {
+        // if (isMouseDown) {
+          cx = e.clientX - startX + styleLeft
+          cy = e.clientY - startY + styleTop
+          if (cx < 0) {
+            cx = 0
+          }
+          if (cy < 0) {
+            cy = 0
+          }
+          if (cx + width > window.innerWidth) {
+            cx = window.innerWidth - width
+          }
+          if (cy + height > window.innerHeight) {
+            cy = window.innerHeight - height
+          }
+          draggable.style.left = cx + 'px';
+          draggable.style.top = cy + 'px';
+        // }
       }
-    })
-
-    draggable.addEventListener('mouseup', function () {
-      isMouseDown = false;
-      draggable.classList.remove('no-select');
-    })
-    document.addEventListener('mouseup' , function (e) {
-      if(e.clientY > window.innerHeight || e.clientY < 0 || e.clientX < 0 || e.clientX > innerWidth){
-        isMouseDown = false;
+      document.onmouseup = function (e) {
+        document.onmousemove = null
         draggable.classList.remove('no-select');
+        styleLeft = cx
+        styleTop = cy
       }
-    })
+    }
   </script>
 </body>
 

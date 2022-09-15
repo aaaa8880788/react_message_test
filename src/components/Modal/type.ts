@@ -19,3 +19,4 @@ export interface ModalProps
 }
 
 export type OnOkType = (event:React.MouseEvent<HTMLElement> & { stopClose: () => void }) => void | Promise<void>
+

@@ -12,11 +12,11 @@ function App() {
       {/* Modal正常使用 */}
       {/* <DemoA /> */}
       {/* Modal封装 */}
-      {/* <DemoB /> */}
+      <DemoB /> 
       {/* Modal封装+拖拽 */}
       {/* <DemoC /> */}
       {/* Modal封装+拖拽+demo */}
-      <DemoD />
+      {/* <DemoD /> */}
     </div>
   );
 }

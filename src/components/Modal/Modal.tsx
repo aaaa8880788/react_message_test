@@ -14,10 +14,10 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
   ref
 ) => {
   const { children, onOk, onCancel, ...reset } = props;
-  const [spinning, setSpinning] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const isStop = useRef(false);
+  const [spinning, setSpinning] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [confirmLoading, setConfirmLoading] = useState<boolean>(false);
+  const isStop = useRef<boolean>(false);
 
   const stopClose = useCallback(() => {
     isStop.current = true;
@@ -61,6 +61,7 @@ const Modal: ForwardRefRenderFunction<ModalRef, ModalProps> = (
       confirmLoading={confirmLoading}
       onOk={handleOnOK}
       onCancel={handleOnCancel}
+      
     >
       <Spin spinning={spinning}>{children}</Spin>
     </AntdModal>

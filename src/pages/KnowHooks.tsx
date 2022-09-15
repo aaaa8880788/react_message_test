@@ -13,24 +13,24 @@ const KnowHooks:FC = () => {
   return (
     <div>
       <Child btnClickHandle={btn1ClickHandle}>
-        button1
+        {count1}
       </Child>
       <br />
       <Child btnClickHandle={btn2ClickHandle}>
-        button2
+        {count2}
       </Child>
       <br />
       <Child btnClickHandle={()=>{
         setCount3(count3+1)    
       }}>
-        button3
+        {count3}
       </Child>
       <br />
     </div>
   )
 }
 
-const Child:FC<ChildProps<string>> = React.memo((props = {}) => {
+const Child:FC<ChildProps<any>> = React.memo((props = {}) => {
   const {children,btnClickHandle} = props
   return (
     <>
